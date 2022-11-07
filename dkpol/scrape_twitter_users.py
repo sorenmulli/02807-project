@@ -1,18 +1,16 @@
+from __future__ import annotations
+
 import os
 import time
-from typing import Optional, List
 from selenium import webdriver
-from bs4 import BeautifulSoup
 from lxml import html
-
-import requests
 
 SEARCH_URL = "https://twitter.com/search?q={0}&src=unknown&f=user"
 DRIVER_FOLDER = "."
 os.environ["PATH"] += ":" + DRIVER_FOLDER
 
-def search_user(name: str, driver: webdriver) -> List[str]:
-    page = driver.get(SEARCH_URL.format(name))
+def search_user(name: str, driver: webdriver) -> tuple[str, str, str]:
+    driver.get(SEARCH_URL.format(name))
     time.sleep(5) # Wait for JS to load :-P
     tree = html.fromstring(driver.page_source)
     allres = list()
@@ -23,17 +21,28 @@ def search_user(name: str, driver: webdriver) -> List[str]:
         i += 1
         allres.extend(m)
     for res in allres:
-        name_div, bio_div = list(res)
-        name_div = list(list(name_div)[0])[0]
-        display_div, handle_div = list(name_div)
-        breakpoint()
-
-
-
-
-    breakpoint()
+        try:
+            name_div, bio_div = list(res)
+            name_div = list(list(name_div)[0])[0]
+            display_div, handle_div = list(name_div)
+            name = display_div[0][0][0][0][0].text
+            handle = handle_div[0][0][0][0][0].text
+            bio = bio_div[0].text
+        except ValueError:
+            # No bio (probably, at least in one case)
+            name_div = res[0]
+            name_div = list(list(name_div)[0])[0]
+            display_div, handle_div = list(name_div)
+            name = display_div[0][0][0][0][0].text
+            handle = handle_div[0][0][0][0][0].text
+            bio = ""
+        print(name, handle)
+        print(bio)
+        # return name, handle, bio
 
 if __name__ == "__main__":
-    driver = webdriver.Firefox()
-    search_user("kenneth mikkelsen", driver)
+    options = webdriver.FirefoxOptions()
+    options.headless = True
+    driver = webdriver.Firefox(options=options)
+    search_user("pia kærsgaard", driver)
 
