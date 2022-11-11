@@ -2,3 +2,4 @@ tweepy
 selenium
 bs4
 lxml
+pelutils
