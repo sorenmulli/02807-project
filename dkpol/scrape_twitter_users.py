@@ -15,7 +15,7 @@ os.environ["PATH"] += ":" + DRIVER_FOLDER
 def search_user(name: str, driver: webdriver) -> tuple[str, str, str]:
     log("Getting twitter info for %s" % name)
     driver.get(SEARCH_URL.format(name))
-    time.sleep(5)  # Wait for JS to load :-P
+    time.sleep(7)  # Wait for JS to load :-P
     tree = html.fromstring(driver.page_source)
     allres = list()
     m = True
@@ -62,10 +62,16 @@ if __name__ == "__main__":
     with open("data/all_candidates.csv") as fp_cand, open("data/candidates_full.csv", "w") as fp_full:
         reader = csv.reader(fp_cand, delimiter=",")
         writer = csv.writer(fp_full, delimiter=",", quoting=csv.QUOTE_MINIMAL)
+        fails = list()
         writer.writerow(("Name", "Handle", "Party", "Bio"))
         next(reader)  # Skip header
         for row in reader:
             name, party_letter = row
-            name, handle, bio = search_user(name, driver)
+            try:
+                name, handle, bio = search_user(name, driver)
+            except TypeError:
+                log.error("Failed to get data for %s" % name)
+                fails.append(name)
             writer.writerow((name, handle, party_letter, bio))
             fp_full.flush()  # Force write to file during run
+        log("Failed to get info for the following", *fails)
