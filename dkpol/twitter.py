@@ -1,8 +1,10 @@
 import sys, os
 import json
 from typing import List, Tuple
-
+import pandas as pd
+import numpy as np
 import tweepy
+import time
 
 STD_PATH = os.path.join(os.path.dirname(sys.argv[0]), "..", "secrets.json")
 
@@ -16,9 +18,21 @@ def get_client(secret_path: str=STD_PATH):
     return tweepy.Client(secrets["bearer"], wait_on_rate_limit=True)
 
 def get_ids(client: tweepy.Client, usernames: List[str]) -> List[Tuple[int, str]]:
-    assert len(usernames) < 100
-    res = client.get_users(usernames=usernames)
-    return [r["id"] for r in res.data]
+    BATCH_SIZE = 75
+    SLEEP = 5
+    res = list()
+    num_batches = int(np.ceil(len(usernames) / BATCH_SIZE))
+    for i in range(num_batches):
+        print(f"{i}/{num_batches-1}")
+        batch = usernames[i * BATCH_SIZE : (i+1) * BATCH_SIZE]
+        try:
+            res.extend(
+                [r["id"] for r in client.get_users(usernames=batch).data]
+            )
+        except Exception as e:
+            print(f"Failed! with {e}")
+        time.sleep(SLEEP)
+    return res
 
 def get_user_tweets(client: tweepy.Client, user_id: str):
     tweets = list()
@@ -33,10 +47,13 @@ def get_user_tweets(client: tweepy.Client, user_id: str):
 
 if __name__ == "__main__":
     client = get_client()
-    # ids = get_ids(client, ["KD_Mikkelsen"])
-    # print(ids[0])
-    user_id = "181501903"
-    tweets = get_user_tweets(client, user_id)
-    for t in tweets:
-        print(t[1])
+    df = pd.read_csv("data/candidates_full.csv")
+    df["id"] = get_ids(client, [h.replace("@", "") for h in df.Handle])
+    df.to_csv("data/candidates_with_id.csv")
+    # # ids = get_ids(client, ["KD_Mikkelsen"])
+    # # print(ids[0])
+    # user_id = "181501903"
+    # tweets = get_user_tweets(client, user_id)
+    # for t in tweets:
+    #     print(t[1])
 
