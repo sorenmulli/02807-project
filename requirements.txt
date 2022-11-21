@@ -7,3 +7,13 @@ pandas
 efficient-apriori
 gensim
 tqdm
+networkx
+fa2
+community
+python-louvain
+nltk
+wordcloud
+decorator==5.0.9
+fitz
+PyMuPDF
+torch
