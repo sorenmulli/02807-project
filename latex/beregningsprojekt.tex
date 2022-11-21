@@ -54,24 +54,31 @@ s183912, s183911, indsæt slavenumre}
 
 \paragraph{Network Stuff}
 
+\paragraph{Hashtag Itemsets}
+\begin{enumerate}
+    \item Motivation
+\end{enumerate}
+Each tweet is considered with each mentioned hashtag as an item in this basket.
+In the 53K baskets, 11885 have hashtags and are kept for this analysis.
+Herein, $n=4535$ unique hashtags are used totalling $19522$ mentions.
+The top hashtags are shown in Table~\ref{tab:tophash}.
+The A-Priori algorithm is run on the item sets, considering an itemset frequent if it has support $s>0.25\pro$ and limiting association rule confidence at $75\pro$.
+Memory and run time are recorded.
+Additional runs of the itemset algorithms are done by partitioning the tweets by political party bloc to see different themes between the right and the left bloc.
+% The dataset
+\begin{table}[H]
+    \small
+    \centering
+        \begin{tabular}{llllllllll}
+        dkpol & worlds2022 & dkmedier & dkgreen & fv22 & ftvalg22 & periscope & sundpol & uddpol & lec\\
+            \hline
+           $56$ & $5.6$ & $5.3$ & $3.5$ & $3.3$ & $1.8$ & $0.9$ & $0.9$ & $0.8$ & $0.8$
+        \end{tabular}
+    \caption{Top 10 hashtags and their support $[\pro]$}
+    \label{tab:tophash}
+\end{table}\noindent
+
 \subsection*{Conlusion and Discussion}
 %TODO Lærte vi noget???
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
