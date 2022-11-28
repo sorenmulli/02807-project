@@ -2,7 +2,7 @@ tweepy
 selenium
 bs4
 lxml
-pelutils
+pelutils[ds]
 pandas
 efficient-apriori
 gensim
