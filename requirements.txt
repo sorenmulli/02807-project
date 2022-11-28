@@ -18,3 +18,4 @@ fitz
 PyMuPDF==1.19.6
 torch
 powerlaw==1.5
+umap-learn
