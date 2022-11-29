@@ -6,6 +6,7 @@ from tqdm import tqdm
 import umap
 import pelutils.ds.plots as plots
 import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 
 np.set_printoptions(precision=2)
@@ -66,11 +67,10 @@ def run():
 
     tp.save("topics")
 
-    if True:
-        log("Removing zero data points")
-        tp.ids = tp.ids[~(tp.counts==0).all(axis=1)]
-        tp.num_words_by_id = tp.num_words_by_id[~(tp.counts==0).all(axis=1)]
-        tp.counts = tp.counts[~(tp.counts==0).all(axis=1)]
+    log("Removing zero data points")
+    tp.ids = tp.ids[~(tp.counts==0).all(axis=1)]
+    tp.num_words_by_id = tp.num_words_by_id[~(tp.counts==0).all(axis=1)]
+    tp.counts = tp.counts[~(tp.counts==0).all(axis=1)]
 
     candidates_df = pd.read_csv("data/candidates_with_id.csv")
     party_letters = list()
@@ -96,6 +96,7 @@ def run():
 
     log("Making UMAP embedding")
     embedding = umap.UMAP(random_state=69).fit_transform(freq)
+    # embedding = PCA(n_components=2).fit_transform(freq)
     log("Got embedding with shape %s" % (embedding.shape,))
 
     for i, (x, y) in enumerate(embedding):
@@ -104,13 +105,13 @@ def run():
             log(party_letters[i], names[i], with_info=False, sep=" ")
             log(freq[i], with_info=False)
 
-    with plots.Figure("topics.png"):
-        for letter in unk_party_letters:
-            plt.scatter(embedding[party_letters==letter, 0], embedding[party_letters==letter, 1], c=parties[letter][0], label=letter)
-        plt.legend(ncol=2)
-        plt.grid()
-        plt.xlabel("UMAP embedding dimension 1")
-        plt.ylabel("UMAP embedding dimension 2")
+    for letter in unk_party_letters:
+        plt.scatter(embedding[party_letters==letter, 0], embedding[party_letters==letter, 1], c=parties[letter][0], label=letter)
+    plt.legend(ncol=2)
+    plt.grid()
+    plt.xlabel("UMAP embedding dimension 1")
+    plt.ylabel("UMAP embedding dimension 2")
+    plt.show()
 
 def run_party():
     log("Load tweets")
@@ -139,13 +140,13 @@ def run_party():
     embedding = umap.UMAP(random_state=69, n_neighbors=3).fit_transform(freq)
     log("Got embedding with shape %s" % (embedding.shape,))
 
-    with plots.Figure("topics_party.png", legend_fontsize=0.65):
-        for letter, emb in zip(party_list, embedding):
-            plt.scatter(*emb, c=parties[letter][0], label=letter)
-        plt.legend(ncol=3)
-        plt.grid()
-        plt.xlabel("UMAP embedding dimension 1")
-        plt.ylabel("UMAP embedding dimension 2")
+    for letter, emb in zip(party_list, embedding):
+        plt.scatter(*emb, c=parties[letter][0], label=letter)
+    plt.legend(ncol=3)
+    plt.grid()
+    plt.xlabel("UMAP embedding dimension 1")
+    plt.ylabel("UMAP embedding dimension 2")
+    plt.show()
 
 
 if __name__ == "__main__":
