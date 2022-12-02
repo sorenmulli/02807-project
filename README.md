@@ -13,5 +13,5 @@ questions of importance for the electorate: **What were the most important discu
 Did candidates mainly interact in separate sub-communities, as suggested by the social media echo chamber
 effect? How did the different political parties and party blocs differ in their use of Twitter?**
 
-Main code: `appendix.ipynb`
+Main code and analysis: `appendix.ipynb` <br>
 Data: `/data`
