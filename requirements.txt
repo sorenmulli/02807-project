@@ -14,7 +14,6 @@ python-louvain==0.16
 nltk==3.7
 wordcloud==1.8.2.2
 decorator==5.0.9
-fitz
 PyMuPDF==1.19.6
 torch
 powerlaw==1.5
