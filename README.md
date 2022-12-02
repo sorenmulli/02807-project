@@ -1,5 +1,5 @@
 # 02807-project - What Do Danish Politicians Tweet About?
-Final project in 02807 Computational Tools for Data Science Fall 22 -made by Asger Schultz s183912, Søren Winkel Holm s18311, Anders Henriksen s183904, Huayuan Song s183897
+Final project in 02807 Computational Tools for Data Science Fall 22 <br>-made by Asger Schultz s183912, Søren Winkel Holm s18311, Anders Henriksen s183904, Huayuan Song s183897
 
 ## Data Analysis of Election 2022 Candidate Tweets
 
