@@ -12,3 +12,6 @@ social network graphs. We carry out an explorative analysis with the goal of she
 questions of importance for the electorate: **What were the most important discussion themes in the election?
 Did candidates mainly interact in separate sub-communities, as suggested by the social media echo chamber
 effect? How did the different political parties and party blocs differ in their use of Twitter?**
+
+Main code: `appendix.ipynb`
+Data: `/data`
