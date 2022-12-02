@@ -8,7 +8,7 @@ efficient-apriori
 gensim
 tqdm==4.50.2
 networkx==2.5
-fa2==0.3.5
+fa2==0.3.5  # fa2 is difficult to install on python 3.9, use this guide: https://github.com/bhargavchippada/forceatlas2/issues/34
 community==1.0.0b1
 python-louvain==0.16
 nltk==3.7
