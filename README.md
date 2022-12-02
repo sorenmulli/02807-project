@@ -9,6 +9,6 @@ medium for the general Danish population, a large number of politicians are acti
 has been characterised as a unique discussion hub with immense influence on media and politics.
 We examine the Twitter use of candidates for Parliament during the election using data analysis methods such as
 social network graphs. We carry out an explorative analysis with the goal of shedding light on the following open
-questions of importance for the electorate: What were the most important discussion themes in the election?
+questions of importance for the electorate: **What were the most important discussion themes in the election?
 Did candidates mainly interact in separate sub-communities, as suggested by the social media echo chamber
-effect? How did the different political parties and party blocs differ in their use of Twitter?
+effect? How did the different political parties and party blocs differ in their use of Twitter?**
